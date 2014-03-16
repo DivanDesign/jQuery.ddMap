@@ -1,6 +1,6 @@
 /**
  * jQuery ddYMap Plugin
- * @version 1.0 (2013-07-12)
+ * @version 1.1 (2014-03-16)
  * 
  * @desc A jQuery library that allows Yandex.Maps to be rendered on a page in a simple way.
  * 
@@ -14,9 +14,9 @@
  * @param scrollZoom {boolean} - Allow zoom while scrolling. Default: false.
  * @param placemarkOptions {plain object} - Placemark options. Default: {}.
  * 
- * @link http://code.divandesign.biz/jquery/ddymap/1.0
+ * @link http://code.divandesign.biz/jquery/ddymap/1.1
  * 
- * @copyright 2013, DivanDesign
+ * @copyright 2014, DivanDesign
  * http://www.DivanDesign.biz
  */
 
