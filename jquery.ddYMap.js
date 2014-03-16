@@ -7,9 +7,8 @@
  * @uses jQuery 1.10.2.
  * @uses Yandex.Maps 2.0-stable.
  * 
- * Parameters of the “$.ddYMap.init” method (transferred as plain object).
+ * Parameters of the “$.fn.ddYMap” method (transferred as plain object).
  * @param latLng {array} - Comma separated longitude and latitude. @required
- * @param elementId {string} - Container ID which the map is required to be embed in. Default: 'map'.
  * @param zoom {integer} - Масштаб карты по умолчанию. Default: 15.
  * @param scrollZoom {boolean} - Allow zoom while scrolling. Default: false.
  * @param placemarkOptions {plain object} - Placemark options. Default: {}.
@@ -24,7 +23,7 @@
 $.extend(true, {ddYMap: {
 	defaults: {
 		latLng: new Array(),
-		elementId: 'map',
+		element: 'map',
 		zoom: 15,
 		scrollZoom: false,
 		placemarkOptions: {}
@@ -38,7 +37,7 @@ $.extend(true, {ddYMap: {
 		if ($.isArray(params.latLng) && params.latLng.length == 2){
 			ymaps.ready(function(){
 				//Создаём карту
-				var map = new ymaps.Map(params.elementId, {
+				var map = new ymaps.Map(params.element, {
 						center: params.latLng,
 						zoom: params.zoom
 					}
@@ -63,4 +62,12 @@ $.extend(true, {ddYMap: {
 		}
 	}
 }});
+
+$.fn.ddYMap = function(params){
+	var _this = $.ddYMap;
+	
+	return $(this).each(function(){
+		_this.init($.extend(params, {element: $(this).get(0)}));
+	});
+};
 })(jQuery);
