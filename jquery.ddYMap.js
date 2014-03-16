@@ -9,7 +9,8 @@
  * 
  * Parameters of the “$.fn.ddYMap” method (transferred as plain object).
  * @param latLng {array} - Comma separated longitude and latitude. @required
- * @param zoom {integer} - Масштаб карты по умолчанию. Default: 15.
+ * @param zoom {integer} - Default map zoom. Default: 15.
+ * @param defaultType {'map'; 'satellite'; 'hybrid'; 'publicMap'; 'publicMapHybrid'} - Default map type: 'map' — schematic map, 'satellite' — satellite map, 'hybrid' — hybrid map, 'publicMap' — public map, 'publicMapHybrid' - hybrid public map. Default: 'map';
  * @param scrollZoom {boolean} - Allow zoom while scrolling. Default: false.
  * @param placemarkOptions {plain object} - Placemark options. Default: {}.
  * 
@@ -25,6 +26,7 @@ $.extend(true, {ddYMap: {
 		latLng: new Array(),
 		element: 'map',
 		zoom: 15,
+		defaultType: 'map',
 		scrollZoom: false,
 		placemarkOptions: {}
 	},
@@ -39,7 +41,8 @@ $.extend(true, {ddYMap: {
 				//Создаём карту
 				var map = new ymaps.Map(params.element, {
 						center: params.latLng,
-						zoom: params.zoom
+						zoom: params.zoom,
+						type: 'yandex#' + params.defaultType
 					}
 				);
 				
