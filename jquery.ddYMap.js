@@ -12,6 +12,7 @@
  * @param defaultZoom {integer} - Default map zoom. Default: 15.
  * @param defaultType {'map'; 'satellite'; 'hybrid'; 'publicMap'; 'publicMapHybrid'} - Default map type: 'map' — schematic map, 'satellite' — satellite map, 'hybrid' — hybrid map, 'publicMap' — public map, 'publicMapHybrid' - hybrid public map. Default: 'map';
  * @param scrollZoom {boolean} - Allow zoom while scrolling. Default: false.
+ * @param mapCenterOffset {array} - Center offset of the map with respect to the center of the map container in pixels. Default: [0, 0].
  * @param placemarkOptions {plain object} - Placemark options. Default: {}.
  * 
  * @link http://code.divandesign.biz/jquery/ddymap/1.1
@@ -28,6 +29,7 @@ $.extend(true, {ddYMap: {
 		defaultZoom: 15,
 		defaultType: 'map',
 		scrollZoom: false,
+		mapCenterOffset: false,
 		placemarkOptions: {}
 	},
 	init: function(params){
@@ -45,6 +47,13 @@ $.extend(true, {ddYMap: {
 						type: 'yandex#' + params.defaultType
 					}
 				);
+				
+				//Если нужно смещение центр карты
+				if ($.isArray(params.mapCenterOffset) && params.mapCenterOffset.length == 2){
+					var position = map.getGlobalPixelCenter();
+					
+					map.setGlobalPixelCenter([position[0] - params.mapCenterOffset[0], position[1] - params.mapCenterOffset[1]]);
+				}
 				
 				//Добавляем контролы
 				map.controls
