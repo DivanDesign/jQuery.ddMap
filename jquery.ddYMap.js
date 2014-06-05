@@ -1,6 +1,6 @@
 /**
  * jQuery ddYMap Plugin
- * @version 1.1 (2014-03-16)
+ * @version 1.2 (2014-06-05)
  * 
  * @desc A jQuery library that allows Yandex.Maps to be rendered on a page in a simple way.
  * 
@@ -9,12 +9,13 @@
  * 
  * Parameters of the “$.fn.ddYMap” method (transferred as plain object).
  * @param latLng {array} - Comma separated longitude and latitude. @required
- * @param zoom {integer} - Default map zoom. Default: 15.
+ * @param defaultZoom {integer} - Default map zoom. Default: 15.
  * @param defaultType {'map'; 'satellite'; 'hybrid'; 'publicMap'; 'publicMapHybrid'} - Default map type: 'map' — schematic map, 'satellite' — satellite map, 'hybrid' — hybrid map, 'publicMap' — public map, 'publicMapHybrid' - hybrid public map. Default: 'map';
  * @param scrollZoom {boolean} - Allow zoom while scrolling. Default: false.
+ * @param mapCenterOffset {array} - Center offset of the map with respect to the center of the map container in pixels. Default: [0, 0].
  * @param placemarkOptions {plain object} - Placemark options. Default: {}.
  * 
- * @link http://code.divandesign.biz/jquery/ddymap/1.1
+ * @link http://code.divandesign.biz/jquery/ddymap/1.2
  * 
  * @copyright 2014, DivanDesign
  * http://www.DivanDesign.biz
@@ -25,9 +26,10 @@ $.extend(true, {ddYMap: {
 	defaults: {
 		latLng: new Array(),
 		element: 'map',
-		zoom: 15,
+		defaultZoom: 15,
 		defaultType: 'map',
 		scrollZoom: false,
+		mapCenterOffset: false,
 		placemarkOptions: {}
 	},
 	init: function(params){
@@ -41,10 +43,17 @@ $.extend(true, {ddYMap: {
 				//Создаём карту
 				var map = new ymaps.Map(params.element, {
 						center: params.latLng,
-						zoom: params.zoom,
+						zoom: params.defaultZoom,
 						type: 'yandex#' + params.defaultType
 					}
 				);
+				
+				//Если нужно смещение центр карты
+				if ($.isArray(params.mapCenterOffset) && params.mapCenterOffset.length == 2){
+					var position = map.getGlobalPixelCenter();
+					
+					map.setGlobalPixelCenter([position[0] - params.mapCenterOffset[0], position[1] - params.mapCenterOffset[1]]);
+				}
 				
 				//Добавляем контролы
 				map.controls
