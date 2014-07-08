@@ -5,7 +5,7 @@
  * @desc A jQuery library that allows Yandex.Maps to be rendered on a page in a simple way.
  * 
  * @uses jQuery 1.10.2.
- * @uses Yandex.Maps 2.0-stable.
+ * @uses Yandex.Maps 2.1.
  * 
  * Parameters of the “$.fn.ddYMap” method (transferred as plain object).
  * @param latLng {array} - Comma separated longitude and latitude. @required
@@ -44,7 +44,8 @@ $.extend(true, {ddYMap: {
 				var map = new ymaps.Map(params.element, {
 						center: params.latLng,
 						zoom: params.defaultZoom,
-						type: 'yandex#' + params.defaultType
+						type: 'yandex#' + params.defaultType,
+						controls: []
 					}
 				);
 				
@@ -59,13 +60,15 @@ $.extend(true, {ddYMap: {
 				map.controls
 					.add('zoomControl')
 					.add('typeSelector')
-					.add('scaleLine')
-					.add('mapTools');
+					.add('fullscreenControl')
+					.add('geolocationControl')
+					//Почему-то именно с этим контролом float: left не работает, может это временно.
+					.add('rulerControl', {float: 'left'});
 				
-				//Если зум нужен
-				if (params.scrollZoom){
-					//Включим масштабирование колесом мыши
-					map.behaviors.enable('scrollZoom');
+				//Если зум не нужен
+				if (!params.scrollZoom){
+					//Выключим масштабирование колесом мыши (т.к. в 2.1 по умолчанию он включён)
+					map.behaviors.disable('scrollZoom');
 				}
 				
 				//Создаём метку и добавляем на карту
