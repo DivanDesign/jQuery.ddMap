@@ -147,6 +147,8 @@ $.extend(true, {ddYMap: {
 					
 					map.setGlobalPixelCenter([position[0] - params.mapCenterOffset[0], position[1] - params.mapCenterOffset[1]]);
 				}
+				
+				$(params.element).data('ddYMap', {map: map}).trigger('ddAfterInit');
 			}
 		});
 	}
@@ -156,7 +158,7 @@ $.fn.ddYMap = function(params){
 	var _this = $.ddYMap;
 	
 	return $(this).each(function(){
-		_this.init($.extend(params, {element: $(this).get(0)}));
+		_this.init($.extend(params, {element: this}));
 	});
 };
 })(jQuery);
