@@ -1,6 +1,6 @@
 /**
  * jQuery ddYMap Plugin
- * @version 1.3 (2014-07-10)
+ * @version 1.3.1 (2014-07-24)
  * 
  * @desc A jQuery library that allows Yandex.Maps to be rendered on a page in a simple way.
  * 
@@ -18,7 +18,7 @@
  * @param mapCenterOffset {array} - Center offset of the map with respect to the center of the map container in pixels. Default: [0, 0].
  * @param placemarkOptions {plain object} - Placemark options. Default: {}.
  * 
- * @link http://code.divandesign.biz/jquery/ddymap/1.3
+ * @link http://code.divandesign.biz/jquery/ddymap/1.3.1
  * 
  * @copyright 2014, DivanDesign
  * http://www.DivanDesign.biz
@@ -109,6 +109,13 @@ $.extend(true, {ddYMap: {
 			
 			//Если точки заданы
 			if (geoObjects_len > 0){
+				params.$element = $(params.element);
+				
+				//Установим высоту у элемента, если она не задана
+				if (params.$element.height() == 0){
+					params.$element.height(400);
+				}
+				
 				//Создаём карту
 				var map = new ymaps.Map(params.element, {
 						center: geoObjects.get(0).geometry.getCoordinates(),
@@ -137,8 +144,17 @@ $.extend(true, {ddYMap: {
 				
 				//Если меток несколько
 				if (geoObjects_len > 1){
-					//Надо, чтобы они все влезли
-					map.setBounds(geoObjects.getBounds());
+					//Если элемент с картой скрыт
+					if (params.$element.is(':hidden')){
+						//При первом изменении размера (иначе, если карта была скрыта, выйдет плохо)
+						map.events.once('sizechange', function(){
+							//Надо, чтобы они все влезли
+							map.setBounds(geoObjects.getBounds());
+						});
+					}else{
+						//Надо, чтобы они все влезли
+						map.setBounds(geoObjects.getBounds());
+					}
 				}
 				
 				//Если нужно смещение центра карты
@@ -148,7 +164,7 @@ $.extend(true, {ddYMap: {
 					map.setGlobalPixelCenter([position[0] - params.mapCenterOffset[0], position[1] - params.mapCenterOffset[1]]);
 				}
 				
-				$(params.element).data('ddYMap', {map: map}).trigger('ddAfterInit');
+				params.$element.data('ddYMap', {map: map}).trigger('ddAfterInit');
 			}
 		});
 	}
