@@ -109,6 +109,13 @@ $.extend(true, {ddYMap: {
 			
 			//Если точки заданы
 			if (geoObjects_len > 0){
+				params.$element = $(params.element);
+				
+				//Установим высоту у элемента, если она не задана
+				if (params.$element.height() == 0){
+					params.$element.height(400);
+				}
+				
 				//Создаём карту
 				var map = new ymaps.Map(params.element, {
 						center: geoObjects.get(0).geometry.getCoordinates(),
@@ -116,8 +123,6 @@ $.extend(true, {ddYMap: {
 						type: 'yandex#' + params.defaultType,
 						controls: []
 					});
-				
-				params.$element = $(params.element);
 				
 				//Добавляем контролы
 				map.controls
