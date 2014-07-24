@@ -1,6 +1,6 @@
 /**
  * jQuery ddYMap Plugin
- * @version 1.3 (2014-07-10)
+ * @version 1.3.1 (2014-07-24)
  * 
  * @desc A jQuery library that allows Yandex.Maps to be rendered on a page in a simple way.
  * 
@@ -18,7 +18,7 @@
  * @param mapCenterOffset {array} - Center offset of the map with respect to the center of the map container in pixels. Default: [0, 0].
  * @param placemarkOptions {plain object} - Placemark options. Default: {}.
  * 
- * @link http://code.divandesign.biz/jquery/ddymap/1.3
+ * @link http://code.divandesign.biz/jquery/ddymap/1.3.1
  * 
  * @copyright 2014, DivanDesign
  * http://www.DivanDesign.biz
