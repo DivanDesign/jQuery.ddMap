@@ -117,6 +117,8 @@ $.extend(true, {ddYMap: {
 						controls: []
 					});
 				
+				params.$element = $(params.element);
+				
 				//Добавляем контролы
 				map.controls
 					.add('zoomControl')
@@ -137,8 +139,17 @@ $.extend(true, {ddYMap: {
 				
 				//Если меток несколько
 				if (geoObjects_len > 1){
-					//Надо, чтобы они все влезли
-					map.setBounds(geoObjects.getBounds());
+					//Если элемент с картой скрыт
+					if (params.$element.is(':hidden')){
+						//При первом изменении размера (иначе, если карта была скрыта, выйдет плохо)
+						map.events.once('sizechange', function(){
+							//Надо, чтобы они все влезли
+							map.setBounds(geoObjects.getBounds());
+						});
+					}else{
+						//Надо, чтобы они все влезли
+						map.setBounds(geoObjects.getBounds());
+					}
 				}
 				
 				//Если нужно смещение центра карты
@@ -148,7 +159,7 @@ $.extend(true, {ddYMap: {
 					map.setGlobalPixelCenter([position[0] - params.mapCenterOffset[0], position[1] - params.mapCenterOffset[1]]);
 				}
 				
-				$(params.element).data('ddYMap', {map: map}).trigger('ddAfterInit');
+				params.$element.data('ddYMap', {map: map}).trigger('ddAfterInit');
 			}
 		});
 	}
