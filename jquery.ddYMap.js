@@ -33,7 +33,14 @@ $.extend(true, {ddYMap: {
 		defaultType: 'map',
 		scrollZoom: false,
 		mapCenterOffset: false,
-		placemarkOptions: {}
+		placemarkOptions: {},
+		controls: [
+			{name: 'zoomControl'},
+			{name: 'typeSelector'},
+			{name: 'fullscreenControl'},
+			{name: 'geolocationControl'},
+			{name: 'rulerControl'}
+		]
 	},
 	//TODO: перенести метод в $.ddTools
 	verifyRenamedParams: function(params, compliance){
@@ -124,14 +131,15 @@ $.extend(true, {ddYMap: {
 						controls: []
 					});
 				
-				//Добавляем контролы
-				map.controls
-					.add('zoomControl')
-					.add('typeSelector')
-					.add('fullscreenControl')
-					.add('geolocationControl')
-					//Почему-то именно с этим контролом float: left не работает, может это временно.
-					.add('rulerControl', {float: 'left'});
+				//Если заданы котролы
+				if($.isArray(params.controls)){
+					$.each(params.controls, function(index, control){
+						if(control.name){
+							//Добавляем их
+							map.controls.add(control.name, control.options);
+						}
+					});
+				}
 				
 				//Если зум не нужен
 				if (!params.scrollZoom){
