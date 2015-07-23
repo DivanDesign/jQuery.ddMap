@@ -40,7 +40,10 @@ $.extend(true, {ddYMap: {
 			{name: 'fullscreenControl'},
 			{name: 'geolocationControl'},
 			{name: 'rulerControl'}
-		]
+		],
+		mapOptions: {
+			suppressMapOpenBlock: true
+		}
 	},
 	//TODO: перенести метод в $.ddTools
 	verifyRenamedParams: function(params, compliance){
@@ -129,7 +132,7 @@ $.extend(true, {ddYMap: {
 						zoom: params.defaultZoom,
 						type: 'yandex#' + params.defaultType,
 						controls: []
-					});
+					}, params.mapOptions);
 				
 				//Если заданы котролы
 				if($.isArray(params.controls)){
