@@ -1,26 +1,28 @@
 /**
  * jQuery ddYMap Plugin
- * @version 1.3.1 (2014-07-24)
+ * @version 1.4 (2015-07-23)
  * 
  * @desc A jQuery library that allows Yandex.Maps to be rendered on a page in a simple way.
  * 
- * @uses jQuery 1.10.2.
- * @uses Yandex.Maps 2.1.
+ * @requires jQuery 1.10.2.
+ * @requires Yandex.Maps 2.1.
  * 
  * Parameters of the “$.fn.ddYMap” method (transferred as plain object).
- * @param placemarks {array} - Array of placemarks to be put on the map. If there is more than one placemark, the map will be scaled to make all the placemarks visible. Also, a pair of coordinates still can be passed (like it was in 1.2 and earlier). @required
- * @param placemarks[i] {plain object} - Placemark data. @required
- * @param placemarks[i].latLng {array} - Placemark coordinates (latitude and longitude). @required
- * @param placemarks[i].content {string: html} - Balloon content. Default: ''.
- * @param defaultZoom {integer} - Default map zoom. Default: 15.
- * @param defaultType {'map'; 'satellite'; 'hybrid'; 'publicMap'; 'publicMapHybrid'} - Default map type: 'map' — schematic map, 'satellite' — satellite map, 'hybrid' — hybrid map, 'publicMap' — public map, 'publicMapHybrid' - hybrid public map. Default: 'map';
- * @param scrollZoom {boolean} - Allow zoom while scrolling. Default: false.
- * @param mapCenterOffset {array} - Center offset of the map with respect to the center of the map container in pixels. Default: [0, 0].
- * @param placemarkOptions {plain object} - Placemark options. Default: {}.
+ * @param placemarks {Array} - Array of placemarks to be put on the map. If there is more than one placemark, the map will be scaled to make all the placemarks visible. Also, a pair of coordinates still can be passed (like it was in 1.2 and earlier). @required
+ * @param placemarks[i] {Object} - Placemark data. @required
+ * @param placemarks[i].latLng {Array} - Placemark coordinates (latitude and longitude). @required
+ * @param [placemarks[i].content=''] {string} - Balloon content.
+ * @param [defaultZoom=15] {number} - Default map zoom.
+ * @param [defaultType='map'] {'map'|'satellite'|'hybrid'|'publicMap'|'publicMapHybrid'} - Default map type: 'map' — schematic map, 'satellite' — satellite map, 'hybrid' — hybrid map, 'publicMap' — public map, 'publicMapHybrid' - hybrid public map.
+ * @param [scrollZoom=false] {boolean} - Allow zoom while scrolling.
+ * @param [mapCenterOffset=[0, 0]] {Array} - Center offset of the map with respect to the center of the map container in pixels.
+ * @param [placemarkOptions={}] {Object} - Placemark options.
+ * @param [controls=[{name: 'zoomControl'},{name: 'typeSelector'},{name: 'fullscreenControl'},{name: 'geolocationControl'},{name: 'rulerControl'}]] {Object} - An array of controls to be added onto the map.
+ * @param [mapOptions={suppressMapOpenBlock: true}] {Object} - Represents yandex map options to be passed to the constructor.
  * 
- * @link http://code.divandesign.biz/jquery/ddymap/1.3.1
+ * @link http://code.divandesign.biz/jquery/ddymap/1.4
  * 
- * @copyright 2014, DivanDesign
+ * @copyright 2015, DivanDesign
  * http://www.DivanDesign.biz
  */
 
