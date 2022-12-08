@@ -55,7 +55,7 @@ $.extend(true, {ddYMap: {
 		//Перебираем таблицу соответствия
 		$.each(compliance, function(newName, oldName){
 			//Если старый параметр задан, а новый — нет
-			if ($.type(params[oldName]) != 'undefined' && $.type(params[newName]) == 'undefined'){
+			if (typeof params[oldName] != 'undefined' && typeof params[newName] == 'undefined'){
 				//Зададим
 				result[newName] = params[oldName];
 				msg.push('“' + oldName + '” must be renamed as “' + newName + '”;');
@@ -95,7 +95,7 @@ $.extend(true, {ddYMap: {
 				){
 					//Создаём метку
 					geoObjects.add(new ymaps.Placemark(params.placemarks[i].latLng, {
-						balloonContent: $.type(params.placemarks[i].content) == 'string' ? $.trim(params.placemarks[i].content) : ''
+						balloonContent: typeof params.placemarks[i].content == 'string' ? $.trim(params.placemarks[i].content) : ''
 					}, params.placemarkOptions));
 				}
 			}
