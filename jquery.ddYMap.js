@@ -27,167 +27,260 @@
  */
 
 (function($){
-$.extend(true, {ddYMap: {
-	defaults: {
-		placemarks: new Array(),
-		element: 'map',
-		defaultZoom: 15,
-		defaultType: 'map',
-		scrollZoom: false,
-		mapCenterOffset: false,
-		placemarkOptions: {},
-		controls: [
-			{name: 'zoomControl'},
-			{name: 'typeSelector'},
-			{name: 'fullscreenControl'},
-			{name: 'geolocationControl'},
-			{name: 'rulerControl'}
-		],
-		mapOptions: {
-			suppressMapOpenBlock: true
-		}
-	},
-	//TODO: перенести метод в $.ddTools
-	verifyRenamedParams: function(params, compliance){
-		var result = {},
-			msg = new Array();
-		
-		//Перебираем таблицу соответствия
-		$.each(compliance, function(newName, oldName){
-			//Если старый параметр задан, а новый — нет
-			if (typeof params[oldName] != 'undefined' && typeof params[newName] == 'undefined'){
-				//Зададим
-				result[newName] = params[oldName];
-				msg.push('“' + oldName + '” must be renamed as “' + newName + '”;');
-			}
-		});
-		
-		if (msg.length > 0){
-			console.group('$.ddYMap');
-			console.warn('Some of the parameters have been renamed. Please, correct the following parameters:');
-			
-			for (var i = 0; i < msg.length; i++){
-				console.warn(msg[i]);
-			}
-			
-			console.groupEnd();
-		}
-		
-		return result;
-	},
-	preparePlacemarks: function(params){
-		var geoObjects = new ymaps.GeoObjectCollection();
-		
-		if (!$.isArray(params.placemarks)){return geoObjects;}
-		
-		//Если передана просто пара координат
-		if (params.placemarks.length == 2 && $.isNumeric(params.placemarks[0]) && $.isNumeric(params.placemarks[1])){
-			//Значит точка одна
-			geoObjects.add(new ymaps.Placemark(params.placemarks, {}, params.placemarkOptions));
-		}else{
-			//Переберём все точки
-			for (var i = 0; i < params.placemarks.length; i++){
-				//Если координаты заданы
-				if (
-					$.isPlainObject(params.placemarks[i]) &&
-					$.isArray(params.placemarks[i].latLng) &&
-					params.placemarks[i].latLng.length == 2
-				){
-					//Создаём метку
-					geoObjects.add(new ymaps.Placemark(params.placemarks[i].latLng, {
-						balloonContent: typeof params.placemarks[i].content == 'string' ? $.trim(params.placemarks[i].content) : ''
-					}, params.placemarkOptions));
+$.extend(
+	true,
+	{
+		ddYMap: {
+			defaults: {
+				placemarks: new Array(),
+				element: 'map',
+				defaultZoom: 15,
+				defaultType: 'map',
+				scrollZoom: false,
+				mapCenterOffset: false,
+				placemarkOptions: {},
+				controls: [
+					{name: 'zoomControl'},
+					{name: 'typeSelector'},
+					{name: 'fullscreenControl'},
+					{name: 'geolocationControl'},
+					{name: 'rulerControl'}
+				],
+				mapOptions: {
+					suppressMapOpenBlock: true
 				}
-			}
-		}
-		
-		return geoObjects;
-	},
-	init: function(params){
-		var _this = this;
-		
-		$.extend(params, _this.verifyRenamedParams(params, {
-			'defaultZoom': 'zoom',
-			'placemarks': 'latLng'
-		}));
-		
-		params = $.extend({}, _this.defaults, params);
-		
-		ymaps.ready(function(){
-			//Подготавливаем точки
-			var geoObjects = _this.preparePlacemarks(params),
-				//Количество точек
-				geoObjects_len = geoObjects.getLength();
+			},
 			
-			//Если точки заданы
-			if (geoObjects_len > 0){
-				params.$element = $(params.element);
+			//TODO: перенести метод в $.ddTools
+			verifyRenamedParams: function(
+				params,
+				compliance
+			){
+				var
+					result = {},
+					msg = new Array()
+				;
 				
-				//Установим высоту у элемента, если она не задана
-				if (params.$element.height() == 0){
-					params.$element.height(400);
-				}
-				
-				//Создаём карту
-				var map = new ymaps.Map(params.element, {
-						center: geoObjects.get(0).geometry.getCoordinates(),
-						zoom: params.defaultZoom,
-						type: 'yandex#' + params.defaultType,
-						controls: []
-					}, params.mapOptions);
-				
-				//Если заданы котролы
-				if($.isArray(params.controls)){
-					$.each(params.controls, function(index, control){
-						if(control.name){
-							//Добавляем их
-							map.controls.add(control.name, control.options);
+				//Перебираем таблицу соответствия
+				$.each(
+					compliance,
+					function(
+						newName,
+						oldName
+					){
+						//Если старый параметр задан, а новый — нет
+						if (
+							typeof params[oldName] != 'undefined' &&
+							typeof params[newName] == 'undefined'
+						){
+							//Зададим
+							result[newName] = params[oldName];
+							msg.push('“' + oldName + '” must be renamed as “' + newName + '”;');
 						}
-					});
+					}
+				);
+				
+				if (msg.length > 0){
+					console.group('$.ddYMap');
+					console.warn('Some of the parameters have been renamed. Please, correct the following parameters:');
+					
+					for (
+						var i = 0;
+						i < msg.length;
+						i++
+					){
+						console.warn(msg[i]);
+					}
+					
+					console.groupEnd();
 				}
 				
-				//Если зум не нужен
-				if (!params.scrollZoom){
-					//Выключим масштабирование колесом мыши (т.к. в 2.1 по умолчанию он включён)
-					map.behaviors.disable('scrollZoom');
+				return result;
+			},
+			
+			preparePlacemarks: function(params){
+				var geoObjects = new ymaps.GeoObjectCollection();
+				
+				if (!$.isArray(params.placemarks)){
+					return geoObjects;
 				}
 				
-				//Добавляем метки на карту
-				map.geoObjects.add(geoObjects);
-				
-				//Если меток несколько
-				if (geoObjects_len > 1){
-					//Если элемент с картой скрыт
-					if (params.$element.is(':hidden')){
-						//При первом изменении размера (иначе, если карта была скрыта, выйдет плохо)
-						map.events.once('sizechange', function(){
-							//Надо, чтобы они все влезли
-							map.setBounds(geoObjects.getBounds());
-						});
-					}else{
-						//Надо, чтобы они все влезли
-						map.setBounds(geoObjects.getBounds());
+				//Если передана просто пара координат
+				if (
+					params.placemarks.length == 2 &&
+					$.isNumeric(params.placemarks[0]) &&
+					$.isNumeric(params.placemarks[1])
+				){
+					//Значит точка одна
+					geoObjects.add(
+						new ymaps.Placemark(
+							params.placemarks,
+							{},
+							params.placemarkOptions
+						)
+					);
+				}else{
+					//Переберём все точки
+					for (
+						var i = 0;
+						i < params.placemarks.length;
+						i++
+					){
+						//Если координаты заданы
+						if (
+							$.isPlainObject(params.placemarks[i]) &&
+							$.isArray(params.placemarks[i].latLng) &&
+							params.placemarks[i].latLng.length == 2
+						){
+							//Создаём метку
+							geoObjects.add(
+								new ymaps.Placemark(
+									params.placemarks[i].latLng,
+									{
+										balloonContent:
+											typeof params.placemarks[i].content == 'string' ?
+											$.trim(params.placemarks[i].content) :
+											''
+									},
+									params.placemarkOptions
+								)
+							);
+						}
 					}
 				}
 				
-				//Если нужно смещение центра карты
-				if ($.isArray(params.mapCenterOffset) && params.mapCenterOffset.length == 2){
-					var position = map.getGlobalPixelCenter();
-					
-					map.setGlobalPixelCenter([position[0] - params.mapCenterOffset[0], position[1] - params.mapCenterOffset[1]]);
-				}
+				return geoObjects;
+			},
+			
+			init: function(params){
+				var _this = this;
 				
-				params.$element.data('ddYMap', {map: map}).trigger('ddAfterInit');
+				$.extend(
+					params,
+					_this.verifyRenamedParams(
+						params,
+						{
+							'defaultZoom': 'zoom',
+							'placemarks': 'latLng'
+						}
+					)
+				);
+				
+				params = $.extend(
+					{},
+					_this.defaults,
+					params
+				);
+				
+				ymaps.ready(function(){
+					var
+						//Подготавливаем точки
+						geoObjects = _this.preparePlacemarks(params),
+						//Количество точек
+						geoObjects_len = geoObjects.getLength()
+					;
+					
+					//Если точки заданы
+					if (geoObjects_len > 0){
+						params.$element = $(params.element);
+						
+						//Установим высоту у элемента, если она не задана
+						if (params.$element.height() == 0){
+							params.$element.height(400);
+						}
+						
+						//Создаём карту
+						var map = new ymaps.Map(
+							params.element,
+							{
+								center: geoObjects.get(0).geometry.getCoordinates(),
+								zoom: params.defaultZoom,
+								type: 'yandex#' + params.defaultType,
+								controls: []
+							},
+							params.mapOptions
+						);
+						
+						//Если заданы котролы
+						if($.isArray(params.controls)){
+							$.each(
+								params.controls,
+								function(
+									index,
+									control
+								){
+									if(control.name){
+										//Добавляем их
+										map.controls.add(control.name, control.options);
+									}
+								}
+							);
+						}
+						
+						//Если зум не нужен
+						if (!params.scrollZoom){
+							//Выключим масштабирование колесом мыши (т.к. в 2.1 по умолчанию он включён)
+							map.behaviors.disable('scrollZoom');
+						}
+						
+						//Добавляем метки на карту
+						map.geoObjects.add(geoObjects);
+						
+						//Если меток несколько
+						if (geoObjects_len > 1){
+							//Если элемент с картой скрыт
+							if (params.$element.is(':hidden')){
+								//При первом изменении размера (иначе, если карта была скрыта, выйдет плохо)
+								map.events.once(
+									'sizechange',
+									function(){
+										//Надо, чтобы они все влезли
+										map.setBounds(geoObjects.getBounds());
+									}
+								);
+							}else{
+								//Надо, чтобы они все влезли
+								map.setBounds(geoObjects.getBounds());
+							}
+						}
+						
+						//Если нужно смещение центра карты
+						if (
+							$.isArray(params.mapCenterOffset) &&
+							params.mapCenterOffset.length == 2
+						){
+							var position = map.getGlobalPixelCenter();
+							
+							map.setGlobalPixelCenter([
+								position[0] - params.mapCenterOffset[0],
+								position[1] - params.mapCenterOffset[1]
+							]);
+						}
+						
+						params.$element
+							.data(
+								'ddYMap',
+								{map: map}
+							)
+							.trigger('ddAfterInit')
+						;
+					}
+				});
 			}
-		});
+		}
 	}
-}});
+);
 
 $.fn.ddYMap = function(params){
 	var _this = $.ddYMap;
 	
 	return $(this).each(function(){
-		_this.init($.extend(params, {element: this}));
+		_this.init(
+			$.extend(
+				params,
+				{element: this}
+			)
+		);
 	});
 };
 })(jQuery);
