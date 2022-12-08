@@ -62,12 +62,12 @@ $.extend(
 				;
 				
 				//Перебираем таблицу соответствия
-				$.each(
-					compliance,
-					function(
+				Object.entries(compliance).forEach(
+					([
 						newName,
 						oldName
-					){
+					]) =>
+					{
 						//Если старый параметр задан, а новый — нет
 						if (
 							typeof params[oldName] != 'undefined' &&
@@ -203,15 +203,15 @@ $.extend(
 						
 						//Если заданы котролы
 						if(Array.isArray(params.controls)){
-							$.each(
-								params.controls,
-								function(
-									index,
-									control
-								){
+							params.controls.forEach(
+								(control) =>
+								{
 									if(control.name){
 										//Добавляем их
-										map.controls.add(control.name, control.options);
+										map.controls.add(
+											control.name,
+											control.options
+										);
 									}
 								}
 							);
