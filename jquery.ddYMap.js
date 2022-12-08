@@ -101,7 +101,7 @@ $.extend(
 			preparePlacemarks: function(params){
 				var geoObjects = new ymaps.GeoObjectCollection();
 				
-				if (!$.isArray(params.placemarks)){
+				if (!Array.isArray(params.placemarks)){
 					return geoObjects;
 				}
 				
@@ -129,7 +129,7 @@ $.extend(
 						//Если координаты заданы
 						if (
 							$.isPlainObject(params.placemarks[i]) &&
-							$.isArray(params.placemarks[i].latLng) &&
+							Array.isArray(params.placemarks[i].latLng) &&
 							params.placemarks[i].latLng.length == 2
 						){
 							//Создаём метку
@@ -202,7 +202,7 @@ $.extend(
 						);
 						
 						//Если заданы котролы
-						if($.isArray(params.controls)){
+						if(Array.isArray(params.controls)){
 							$.each(
 								params.controls,
 								function(
@@ -246,7 +246,7 @@ $.extend(
 						
 						//Если нужно смещение центра карты
 						if (
-							$.isArray(params.mapCenterOffset) &&
+							Array.isArray(params.mapCenterOffset) &&
 							params.mapCenterOffset.length == 2
 						){
 							var position = map.getGlobalPixelCenter();
