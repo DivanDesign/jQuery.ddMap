@@ -153,11 +153,11 @@ $.extend(
 			},
 			
 			init: function(params){
-				var _this = this;
+				var theLib = this;
 				
 				$.extend(
 					params,
-					_this.verifyRenamedParams(
+					theLib.verifyRenamedParams(
 						params,
 						{
 							'defaultZoom': 'zoom',
@@ -168,14 +168,14 @@ $.extend(
 				
 				params = $.extend(
 					{},
-					_this.defaults,
+					theLib.defaults,
 					params
 				);
 				
 				ymaps.ready(function(){
 					var
 						//Подготавливаем точки
-						geoObjects = _this.preparePlacemarks(params),
+						geoObjects = theLib.preparePlacemarks(params),
 						//Количество точек
 						geoObjects_len = geoObjects.getLength()
 					;
@@ -274,10 +274,10 @@ $.extend(
 );
 
 $.fn.ddYMap = function(params){
-	var _this = $.ddYMap;
+	var theLib = $.ddYMap;
 	
 	return $(this).each(function(){
-		_this.init(
+		theLib.init(
 			$.extend(
 				params,
 				{element: this}
