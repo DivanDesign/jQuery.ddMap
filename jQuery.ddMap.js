@@ -53,6 +53,9 @@
 					apiKey: ''
 				},
 				
+				isStaticInited: false,
+				apiConnectionAttempts: 0,
+				
 				prepareMarkers: function(params){
 					var geoObjects = new ymaps.GeoObjectCollection();
 					
@@ -137,102 +140,119 @@
 						apiKey: params.apiKey
 					});
 					
-					ymaps.ready(function(){
-						var
-							//Подготавливаем точки
-							geoObjects = theLib.prepareMarkers(params),
-							//Количество точек
-							geoObjects_len = geoObjects.getLength()
-						;
+					//If Yandex map API is not loaded yet
+					if (typeof ymaps == 'undefined'){
+						theLib.apiConnectionAttempts++;
 						
-						//Если точки заданы
-						if (geoObjects_len > 0){
-							params.$element = $(params.$element);
-							
-							//Установим высоту у элемента, если она не задана
-							if (params.$element.height() == 0){
-								params.$element.height(400);
-							}
-							
-							//Создаём карту
-							var
-								map = new ymaps.Map(
-									params.$element.get(0),
-									{
-										center: geoObjects.get(0).geometry.getCoordinates(),
-										zoom: params.defaultZoom,
-										type: 'yandex#' + params.defaultType,
-										controls: []
-									},
-									params.mapOptions
+						//Try again later but 10 attempts as maximum
+						if (theLib.apiConnectionAttempts < 10){
+							setTimeout(
+								theLib.init.bind(theLib, params),
+								(
+									500 +
+									//Await + 100 ms after each attempt
+									theLib.apiConnectionAttempts * 100
 								)
+							);
+						}
+					}else{
+						ymaps.ready(function(){
+							var
+								//Подготавливаем точки
+								geoObjects = theLib.prepareMarkers(params),
+								//Количество точек
+								geoObjects_len = geoObjects.getLength()
 							;
 							
-							//Если заданы котролы
-							if(Array.isArray(params.controls)){
-								params.controls.forEach(
-									control =>
-									{
-										if(control.name){
-											//Добавляем их
-											map.controls.add(
-												control.name,
-												control.options
-											);
-										}
-									}
-								);
-							}
-							
-							//Если зум не нужен
-							if (!params.scrollZoom){
-								//Выключим масштабирование колесом мыши (т.к. в 2.1 по умолчанию он включён)
-								map.behaviors.disable('scrollZoom');
-							}
-							
-							//Добавляем метки на карту
-							map.geoObjects.add(geoObjects);
-							
-							//Если меток несколько
-							if (geoObjects_len > 1){
-								//Если элемент с картой скрыт
-								if (params.$element.is(':hidden')){
-									//При первом изменении размера (иначе, если карта была скрыта, выйдет плохо)
-									map.events.once(
-										'sizechange',
-										function(){
-											//Надо, чтобы они все влезли
-											map.setBounds(geoObjects.getBounds());
+							//Если точки заданы
+							if (geoObjects_len > 0){
+								params.$element = $(params.$element);
+								
+								//Установим высоту у элемента, если она не задана
+								if (params.$element.height() == 0){
+									params.$element.height(400);
+								}
+								
+								//Создаём карту
+								var
+									map = new ymaps.Map(
+										params.$element.get(0),
+										{
+											center: geoObjects.get(0).geometry.getCoordinates(),
+											zoom: params.defaultZoom,
+											type: 'yandex#' + params.defaultType,
+											controls: []
+										},
+										params.mapOptions
+									)
+								;
+								
+								//Если заданы котролы
+								if(Array.isArray(params.controls)){
+									params.controls.forEach(
+										control =>
+										{
+											if(control.name){
+												//Добавляем их
+												map.controls.add(
+													control.name,
+													control.options
+												);
+											}
 										}
 									);
-								}else{
-									//Надо, чтобы они все влезли
-									map.setBounds(geoObjects.getBounds());
 								}
-							}
-							
-							//Если нужно смещение центра карты
-							if (
-								Array.isArray(params.mapCenterOffset) &&
-								params.mapCenterOffset.length == 2
-							){
-								var position = map.getGlobalPixelCenter();
 								
-								map.setGlobalPixelCenter([
-									position[0] - params.mapCenterOffset[0],
-									position[1] - params.mapCenterOffset[1]
-								]);
+								//Если зум не нужен
+								if (!params.scrollZoom){
+									//Выключим масштабирование колесом мыши (т.к. в 2.1 по умолчанию он включён)
+									map.behaviors.disable('scrollZoom');
+								}
+								
+								//Добавляем метки на карту
+								map.geoObjects.add(geoObjects);
+								
+								//Если меток несколько
+								if (geoObjects_len > 1){
+									//Если элемент с картой скрыт
+									if (params.$element.is(':hidden')){
+										//При первом изменении размера (иначе, если карта была скрыта, выйдет плохо)
+										map.events.once(
+											'sizechange',
+											function(){
+												//Надо, чтобы они все влезли
+												map.setBounds(geoObjects.getBounds());
+											}
+										);
+									}else{
+										//Надо, чтобы они все влезли
+										map.setBounds(geoObjects.getBounds());
+									}
+								}
+								
+								//Если нужно смещение центра карты
+								if (
+									Array.isArray(params.mapCenterOffset) &&
+									params.mapCenterOffset.length == 2
+								){
+									var position = map.getGlobalPixelCenter();
+									
+									map.setGlobalPixelCenter([
+										position[0] - params.mapCenterOffset[0],
+										position[1] - params.mapCenterOffset[1]
+									]);
+								}
+								
+								params.$element
+									.data(
+										'ddMap',
+										{map: map}
+									)
+									.trigger('ddAfterInit')
+								;
 							}
-							
-							params.$element
-								.data(
-									'ddMap',
-									{map: map}
-								)
-								.trigger('ddAfterInit')
-							;
-						}
-					});
+						});
+					}
 				}
 			}
 		}
