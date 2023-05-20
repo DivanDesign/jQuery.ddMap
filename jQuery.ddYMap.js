@@ -74,32 +74,30 @@
 						);
 					}else{
 						//Переберём все точки
-						for (
-							var i = 0;
-							i < params.markers.length;
-							i++
-						){
-							//Если координаты заданы
-							if (
-								$.isPlainObject(params.markers[i]) &&
-								Array.isArray(params.markers[i].latLng) &&
-								params.markers[i].latLng.length == 2
-							){
-								//Создаём метку
-								geoObjects.add(
-									new ymaps.Placemark(
-										params.markers[i].latLng,
-										{
-											balloonContent:
-												typeof params.markers[i].content == 'string' ?
-												$.trim(params.markers[i].content) :
-												''
-										},
-										params.markerOptions
-									)
-								);
+						params.markers.forEach(
+							markerData => {
+								//Если координаты заданы
+								if (
+									$.isPlainObject(markerData) &&
+									Array.isArray(markerData.latLng) &&
+									markerData.latLng.length == 2
+								){
+									//Создаём метку
+									geoObjects.add(
+										new ymaps.Placemark(
+											markerData.latLng,
+											{
+												balloonContent:
+													typeof markerData.content == 'string' ?
+													$.trim(markerData.content) :
+													''
+											},
+											params.markerOptions
+										)
+									);
+								}
 							}
-						}
+						);
 					}
 					
 					return geoObjects;
