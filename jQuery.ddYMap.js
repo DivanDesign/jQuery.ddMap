@@ -51,53 +51,6 @@ $.extend(
 				}
 			},
 			
-			//TODO: перенести метод в $.ddTools
-			verifyRenamedParams: function(
-				params,
-				compliance
-			){
-				var
-					result = {},
-					msg = new Array()
-				;
-				
-				//Перебираем таблицу соответствия
-				Object.entries(compliance).forEach(
-					([
-						newName,
-						oldName
-					]) =>
-					{
-						//Если старый параметр задан, а новый — нет
-						if (
-							typeof params[oldName] != 'undefined' &&
-							typeof params[newName] == 'undefined'
-						){
-							//Зададим
-							result[newName] = params[oldName];
-							msg.push('“' + oldName + '” must be renamed as “' + newName + '”;');
-						}
-					}
-				);
-				
-				if (msg.length > 0){
-					console.group('$.ddYMap');
-					console.warn('Some of the parameters have been renamed. Please, correct the following parameters:');
-					
-					for (
-						var i = 0;
-						i < msg.length;
-						i++
-					){
-						console.warn(msg[i]);
-					}
-					
-					console.groupEnd();
-				}
-				
-				return result;
-			},
-			
 			preparePlacemarks: function(params){
 				var geoObjects = new ymaps.GeoObjectCollection();
 				
@@ -169,17 +122,6 @@ $.extend(
 				var theLib = this;
 				
 				theLib.initStatic();
-				
-				$.extend(
-					params,
-					theLib.verifyRenamedParams(
-						params,
-						{
-							'defaultZoom': 'zoom',
-							'placemarks': 'latLng'
-						}
-					)
-				);
 				
 				params = $.extend(
 					{},
