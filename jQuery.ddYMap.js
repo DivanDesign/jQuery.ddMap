@@ -21,10 +21,9 @@
  * @param [params.controls=[{name: 'zoomControl'},{name: 'typeSelector'},{name: 'fullscreenControl'},{name: 'geolocationControl'},{name: 'rulerControl'}]] {Array} — An array of controls to be added onto the map.
  * @param [params.mapOptions={suppressMapOpenBlock: true}] {objectPlain} — Represents yandex map options to be passed to the constructor.
  * 
- * @link https://code.divandesign.biz/jquery/ddymap
+ * @link https://code.divandesign.ru/jquery/ddymap
  * 
- * @copyright 2015, DivanDesign
- * http://www.DivanDesign.biz
+ * @copyright 2013–2015 [Ronef]{@link https://Ronef.ru }
  */
 
 (function($){
