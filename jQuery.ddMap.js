@@ -4,9 +4,6 @@
  * 
  * @see README.md
  * 
- * @requires jQuery 1.10.2
- * @requires Yandex.Maps 2.1 (will be included automatically if absent)
- * 
  * Parameters of the `$.fn.ddMap` method (transferred as plain object).
  * @param params {objectPlain} — The parameters.
  * @param params.markers {Array} — Array of markers to be put on the map. If there is more than one marker, the map will be scaled to make all the markers visible. Also, a pair of coordinates still can be passed (like it was in 1.2 and earlier).
