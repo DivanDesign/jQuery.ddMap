@@ -147,7 +147,7 @@
 						
 						//Если точки заданы
 						if (geoObjects_len > 0){
-							params.$element = $(params.element);
+							params.$element = $(params.$element);
 							
 							//Установим высоту у элемента, если она не задана
 							if (params.$element.height() == 0){
@@ -157,7 +157,7 @@
 							//Создаём карту
 							var
 								map = new ymaps.Map(
-									params.element,
+									params.$element.get(0),
 									{
 										center: geoObjects.get(0).geometry.getCoordinates(),
 										zoom: params.defaultZoom,
@@ -245,7 +245,9 @@
 			theLib.init(
 				$.extend(
 					params,
-					{element: this}
+					{
+						$element: this
+					}
 				)
 			);
 		});
