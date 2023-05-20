@@ -1,6 +1,8 @@
 # jQuery.ddMap
 
-A jQuery library that allows Yandex.Maps to be rendered on a page in a simple way.
+A jQuery library that allows Yandex Maps to be rendered on a page in a simple way.
+
+Right now the library works only with Yandex Maps, but in the future we are likely to add Google Maps and OpenStreetMap as well.
 
 
 ## Links

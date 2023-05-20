@@ -2,7 +2,7 @@
  * jQuery.ddMap
  * @version 1.4 (2015-07-23)
  * 
- * @desc A jQuery library that allows Yandex.Maps to be rendered on a page in a simple way.
+ * @see README.md
  * 
  * @requires jQuery 1.10.2
  * @requires Yandex.Maps 2.1 (will be included automatically if absent)
