@@ -1,26 +1,27 @@
 /**
- * jQuery ddYMap Plugin
+ * jQuery.ddYMap
  * @version 1.4 (2015-07-23)
  * 
  * @desc A jQuery library that allows Yandex.Maps to be rendered on a page in a simple way.
  * 
- * @requires jQuery 1.10.2.
- * @requires Yandex.Maps 2.1.
+ * @requires jQuery 1.10.2
+ * @requires Yandex.Maps 2.1
  * 
- * Parameters of the “$.fn.ddYMap” method (transferred as plain object).
- * @param placemarks {Array} - Array of placemarks to be put on the map. If there is more than one placemark, the map will be scaled to make all the placemarks visible. Also, a pair of coordinates still can be passed (like it was in 1.2 and earlier). @required
- * @param placemarks[i] {Object} - Placemark data. @required
- * @param placemarks[i].latLng {Array} - Placemark coordinates (latitude and longitude). @required
- * @param [placemarks[i].content=''] {string} - Balloon content.
- * @param [defaultZoom=15] {number} - Default map zoom.
- * @param [defaultType='map'] {'map'|'satellite'|'hybrid'|'publicMap'|'publicMapHybrid'} - Default map type: 'map' — schematic map, 'satellite' — satellite map, 'hybrid' — hybrid map, 'publicMap' — public map, 'publicMapHybrid' - hybrid public map.
- * @param [scrollZoom=false] {boolean} - Allow zoom while scrolling.
- * @param [mapCenterOffset=[0, 0]] {Array} - Center offset of the map with respect to the center of the map container in pixels.
- * @param [placemarkOptions={}] {Object} - Placemark options.
- * @param [controls=[{name: 'zoomControl'},{name: 'typeSelector'},{name: 'fullscreenControl'},{name: 'geolocationControl'},{name: 'rulerControl'}]] {Object} - An array of controls to be added onto the map.
- * @param [mapOptions={suppressMapOpenBlock: true}] {Object} - Represents yandex map options to be passed to the constructor.
+ * Parameters of the `$.fn.ddYMap` method (transferred as plain object).
+ * @param params {objectPlain} — The parameters.
+ * @param params.placemarks {Array} — Array of placemarks to be put on the map. If there is more than one placemark, the map will be scaled to make all the placemarks visible. Also, a pair of coordinates still can be passed (like it was in 1.2 and earlier).
+ * @param params.placemarks[i] {objectPlain} — Placemark data.
+ * @param params.placemarks[i].latLng {Array} — Placemark coordinates (latitude and longitude).
+ * @param [params.placemarks[i].content=''] {string} — Balloon content.
+ * @param [params.defaultZoom=15] {integer} — Default map zoom.
+ * @param [params.defaultType='map'] {'map'|'satellite'|'hybrid'|'publicMap'|'publicMapHybrid'} — Default map type: 'map' — schematic map, 'satellite' — satellite map, 'hybrid' — hybrid map, 'publicMap' — public map, 'publicMapHybrid' - hybrid public map.
+ * @param [params.scrollZoom=false] {boolean} — Allow zoom while scrolling.
+ * @param [params.mapCenterOffset=[0, 0]] {Array} — Center offset of the map with respect to the center of the map container in pixels.
+ * @param [params.placemarkOptions={}] {objectPlain} — Placemark options.
+ * @param [params.controls=[{name: 'zoomControl'},{name: 'typeSelector'},{name: 'fullscreenControl'},{name: 'geolocationControl'},{name: 'rulerControl'}]] {Array} — An array of controls to be added onto the map.
+ * @param [params.mapOptions={suppressMapOpenBlock: true}] {objectPlain} — Represents yandex map options to be passed to the constructor.
  * 
- * @link http://code.divandesign.biz/jquery/ddymap/1.4
+ * @link https://code.divandesign.biz/jquery/ddymap
  * 
  * @copyright 2015, DivanDesign
  * http://www.DivanDesign.biz
@@ -190,21 +191,23 @@ $.extend(
 						}
 						
 						//Создаём карту
-						var map = new ymaps.Map(
-							params.element,
-							{
-								center: geoObjects.get(0).geometry.getCoordinates(),
-								zoom: params.defaultZoom,
-								type: 'yandex#' + params.defaultType,
-								controls: []
-							},
-							params.mapOptions
-						);
+						var
+							map = new ymaps.Map(
+								params.element,
+								{
+									center: geoObjects.get(0).geometry.getCoordinates(),
+									zoom: params.defaultZoom,
+									type: 'yandex#' + params.defaultType,
+									controls: []
+								},
+								params.mapOptions
+							)
+						;
 						
 						//Если заданы котролы
 						if(Array.isArray(params.controls)){
 							params.controls.forEach(
-								(control) =>
+								control =>
 								{
 									if(control.name){
 										//Добавляем их
