@@ -20,6 +20,7 @@
  * @param [params.markerOptions={}] {objectPlain} — Marker options.
  * @param [params.controls=[{name: 'zoomControl'},{name: 'typeSelector'},{name: 'fullscreenControl'},{name: 'geolocationControl'},{name: 'rulerControl'}]] {Array} — An array of controls to be added onto the map.
  * @param [params.mapOptions={suppressMapOpenBlock: true}] {objectPlain} — Represents yandex map options to be passed to the constructor.
+ * @param [params.apiKey] {string} — Yandex Maps API key. For now it is working without key, but Yandex mark it as required, so it is recommended to set it.
  * 
  * @link https://code.divandesign.ru/jquery/ddmap
  * 
@@ -48,7 +49,8 @@
 					],
 					mapOptions: {
 						suppressMapOpenBlock: true
-					}
+					},
+					apiKey: ''
 				},
 				
 				prepareMarkers: function(params){
@@ -103,7 +105,7 @@
 					return geoObjects;
 				},
 				
-				initStatic: function(){
+				initStatic: function(params){
 					var theLib = this;
 					
 					if (!theLib.isStaticInited){
@@ -111,7 +113,13 @@
 						
 						//If Yandex Maps API is not included yet
 						if (typeof ymaps == 'undefined'){
-							$('head').append('<script defer src="//api-maps.yandex.ru/2.1/?lang=' + navigator.language + '"></script>');
+							var apiSrc = '//api-maps.yandex.ru/2.1/?lang=' + navigator.language;
+							
+							if (params.apiKey.length > 0){
+								apiSrc += '&apikey=' + params.apiKey;
+							}
+							
+							$('head').append('<script defer src="' + apiSrc + '"></script>');
 						}
 					}
 				},
@@ -119,13 +127,15 @@
 				init: function(params){
 					var theLib = this;
 					
-					theLib.initStatic();
-					
 					params = $.extend(
 						{},
 						theLib.defaults,
 						params
 					);
+					
+					theLib.initStatic({
+						apiKey: params.apiKey
+					});
 					
 					ymaps.ready(function(){
 						var
@@ -240,9 +250,4 @@
 			);
 		});
 	};
-	
-	//On document.ready
-	$(function(){
-		$.ddMap.initStatic();
-	});
 })(jQuery);
