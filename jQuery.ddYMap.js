@@ -5,7 +5,7 @@
  * @desc A jQuery library that allows Yandex.Maps to be rendered on a page in a simple way.
  * 
  * @requires jQuery 1.10.2
- * @requires Yandex.Maps 2.1
+ * @requires Yandex.Maps 2.1 (will be included automatically if absent)
  * 
  * Parameters of the `$.fn.ddYMap` method (transferred as plain object).
  * @param params {objectPlain} — The parameters.
@@ -152,8 +152,23 @@ $.extend(
 				return geoObjects;
 			},
 			
+			initStatic: function(){
+				var theLib = this;
+				
+				if (!theLib.isStaticInited){
+					theLib.isStaticInited = true;
+					
+					//If Yandex Maps API is not included yet
+					if (typeof ymaps == 'undefined'){
+						$('head').append('<script defer src="//api-maps.yandex.ru/2.1/?lang=' + navigator.language + '"></script>');
+					}
+				}
+			},
+			
 			init: function(params){
 				var theLib = this;
+				
+				theLib.initStatic();
 				
 				$.extend(
 					params,
@@ -285,4 +300,9 @@ $.fn.ddYMap = function(params){
 		);
 	});
 };
+
+//On document.ready
+$(function(){
+	$.ddYMap.initStatic();
+});
 })(jQuery);
