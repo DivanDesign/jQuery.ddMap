@@ -1,2 +1,2 @@
 #!/bin/bash
-terser jQuery.ddYMap.js --compress --mangle --comments false --output jQuery.ddYMap.min.js
+terser jQuery.ddMap.js --compress --mangle --comments false --output jQuery.ddMap.min.js

@@ -1,1 +1,1 @@
-nodemon --watch "jQuery.ddYMap.js" --exec "bash release.sh" --ext js
+nodemon --watch "jQuery.ddMap.js" --exec "bash release.sh" --ext js

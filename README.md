@@ -1,4 +1,4 @@
-# jQuery.ddYMap
+# jQuery.ddMap
 
 A jQuery library that allows Yandex.Maps to be rendered on a page in a simple way.
 ___

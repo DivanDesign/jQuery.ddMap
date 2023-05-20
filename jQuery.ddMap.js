@@ -1,5 +1,5 @@
 /**
- * jQuery.ddYMap
+ * jQuery.ddMap
  * @version 1.4 (2015-07-23)
  * 
  * @desc A jQuery library that allows Yandex.Maps to be rendered on a page in a simple way.
@@ -7,7 +7,7 @@
  * @requires jQuery 1.10.2
  * @requires Yandex.Maps 2.1 (will be included automatically if absent)
  * 
- * Parameters of the `$.fn.ddYMap` method (transferred as plain object).
+ * Parameters of the `$.fn.ddMap` method (transferred as plain object).
  * @param params {objectPlain} — The parameters.
  * @param params.markers {Array} — Array of markers to be put on the map. If there is more than one marker, the map will be scaled to make all the markers visible. Also, a pair of coordinates still can be passed (like it was in 1.2 and earlier).
  * @param params.markers[i] {objectPlain} — Marker data.
@@ -21,7 +21,7 @@
  * @param [params.controls=[{name: 'zoomControl'},{name: 'typeSelector'},{name: 'fullscreenControl'},{name: 'geolocationControl'},{name: 'rulerControl'}]] {Array} — An array of controls to be added onto the map.
  * @param [params.mapOptions={suppressMapOpenBlock: true}] {objectPlain} — Represents yandex map options to be passed to the constructor.
  * 
- * @link https://code.divandesign.ru/jquery/ddymap
+ * @link https://code.divandesign.ru/jquery/ddmap
  * 
  * @copyright 2013–2015 [Ronef]{@link https://Ronef.ru }
  */
@@ -30,7 +30,7 @@
 	$.extend(
 		true,
 		{
-			ddYMap: {
+			ddMap: {
 				defaults: {
 					markers: new Array(),
 					element: 'map',
@@ -216,7 +216,7 @@
 							
 							params.$element
 								.data(
-									'ddYMap',
+									'ddMap',
 									{map: map}
 								)
 								.trigger('ddAfterInit')
@@ -228,8 +228,8 @@
 		}
 	);
 	
-	$.fn.ddYMap = function(params){
-		var theLib = $.ddYMap;
+	$.fn.ddMap = function(params){
+		var theLib = $.ddMap;
 		
 		return $(this).each(function(){
 			theLib.init(
@@ -243,6 +243,6 @@
 	
 	//On document.ready
 	$(function(){
-		$.ddYMap.initStatic();
+		$.ddMap.initStatic();
 	});
 })(jQuery);
