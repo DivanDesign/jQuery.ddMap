@@ -9,15 +9,15 @@
  * 
  * Parameters of the `$.fn.ddYMap` method (transferred as plain object).
  * @param params {objectPlain} — The parameters.
- * @param params.placemarks {Array} — Array of placemarks to be put on the map. If there is more than one placemark, the map will be scaled to make all the placemarks visible. Also, a pair of coordinates still can be passed (like it was in 1.2 and earlier).
- * @param params.placemarks[i] {objectPlain} — Placemark data.
- * @param params.placemarks[i].latLng {Array} — Placemark coordinates (latitude and longitude).
- * @param [params.placemarks[i].content=''] {string} — Balloon content.
+ * @param params.markers {Array} — Array of markers to be put on the map. If there is more than one marker, the map will be scaled to make all the markers visible. Also, a pair of coordinates still can be passed (like it was in 1.2 and earlier).
+ * @param params.markers[i] {objectPlain} — Marker data.
+ * @param params.markers[i].latLng {Array} — Marker coordinates (latitude and longitude).
+ * @param [params.markers[i].content=''] {string} — Balloon content.
  * @param [params.defaultZoom=15] {integer} — Default map zoom.
  * @param [params.defaultType='map'] {'map'|'satellite'|'hybrid'|'publicMap'|'publicMapHybrid'} — Default map type: 'map' — schematic map, 'satellite' — satellite map, 'hybrid' — hybrid map, 'publicMap' — public map, 'publicMapHybrid' - hybrid public map.
  * @param [params.scrollZoom=false] {boolean} — Allow zoom while scrolling.
  * @param [params.mapCenterOffset=[0, 0]] {Array} — Center offset of the map with respect to the center of the map container in pixels.
- * @param [params.placemarkOptions={}] {objectPlain} — Placemark options.
+ * @param [params.markerOptions={}] {objectPlain} — Marker options.
  * @param [params.controls=[{name: 'zoomControl'},{name: 'typeSelector'},{name: 'fullscreenControl'},{name: 'geolocationControl'},{name: 'rulerControl'}]] {Array} — An array of controls to be added onto the map.
  * @param [params.mapOptions={suppressMapOpenBlock: true}] {objectPlain} — Represents yandex map options to be passed to the constructor.
  * 
@@ -32,13 +32,13 @@
 		{
 			ddYMap: {
 				defaults: {
-					placemarks: new Array(),
+					markers: new Array(),
 					element: 'map',
 					defaultZoom: 15,
 					defaultType: 'map',
 					scrollZoom: false,
 					mapCenterOffset: false,
-					placemarkOptions: {},
+					markerOptions: {},
 					controls: [
 						{name: 'zoomControl'},
 						{name: 'typeSelector'},
@@ -51,51 +51,51 @@
 					}
 				},
 				
-				preparePlacemarks: function(params){
+				prepareMarkers: function(params){
 					var geoObjects = new ymaps.GeoObjectCollection();
 					
-					if (!Array.isArray(params.placemarks)){
+					if (!Array.isArray(params.markers)){
 						return geoObjects;
 					}
 					
 					//Если передана просто пара координат
 					if (
-						params.placemarks.length == 2 &&
-						$.isNumeric(params.placemarks[0]) &&
-						$.isNumeric(params.placemarks[1])
+						params.markers.length == 2 &&
+						$.isNumeric(params.markers[0]) &&
+						$.isNumeric(params.markers[1])
 					){
 						//Значит точка одна
 						geoObjects.add(
 							new ymaps.Placemark(
-								params.placemarks,
+								params.markers,
 								{},
-								params.placemarkOptions
+								params.markerOptions
 							)
 						);
 					}else{
 						//Переберём все точки
 						for (
 							var i = 0;
-							i < params.placemarks.length;
+							i < params.markers.length;
 							i++
 						){
 							//Если координаты заданы
 							if (
-								$.isPlainObject(params.placemarks[i]) &&
-								Array.isArray(params.placemarks[i].latLng) &&
-								params.placemarks[i].latLng.length == 2
+								$.isPlainObject(params.markers[i]) &&
+								Array.isArray(params.markers[i].latLng) &&
+								params.markers[i].latLng.length == 2
 							){
 								//Создаём метку
 								geoObjects.add(
 									new ymaps.Placemark(
-										params.placemarks[i].latLng,
+										params.markers[i].latLng,
 										{
 											balloonContent:
-												typeof params.placemarks[i].content == 'string' ?
-												$.trim(params.placemarks[i].content) :
+												typeof params.markers[i].content == 'string' ?
+												$.trim(params.markers[i].content) :
 												''
 										},
-										params.placemarkOptions
+										params.markerOptions
 									)
 								);
 							}
@@ -132,7 +132,7 @@
 					ymaps.ready(function(){
 						var
 							//Подготавливаем точки
-							geoObjects = theLib.preparePlacemarks(params),
+							geoObjects = theLib.prepareMarkers(params),
 							//Количество точек
 							geoObjects_len = geoObjects.getLength()
 						;
