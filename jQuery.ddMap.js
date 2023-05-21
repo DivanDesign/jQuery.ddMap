@@ -2,22 +2,7 @@
  * jQuery.ddMap
  * @version 1.4 (2015-07-23)
  * 
- * @see README.md
- * 
- * Parameters of the `$.fn.ddMap` method (transferred as plain object).
- * @param params {objectPlain} — The parameters.
- * @param params.markers {Array} — Array of markers to be put on the map. If there is more than one marker, the map will be scaled to make all the markers visible. Also, a pair of coordinates still can be passed (like it was in 1.2 and earlier).
- * @param params.markers[i] {objectPlain} — Marker data.
- * @param params.markers[i].latLng {Array} — Marker coordinates (latitude and longitude).
- * @param [params.markers[i].content=''] {string} — Balloon content.
- * @param [params.defaultZoom=15] {integer} — Default map zoom.
- * @param [params.defaultType='map'] {'map'|'satellite'|'hybrid'|'publicMap'|'publicMapHybrid'} — Default map type: 'map' — schematic map, 'satellite' — satellite map, 'hybrid' — hybrid map, 'publicMap' — public map, 'publicMapHybrid' - hybrid public map.
- * @param [params.scrollZoom=false] {boolean} — Allow zoom while scrolling.
- * @param [params.mapCenterOffset=[0, 0]] {Array} — Center offset of the map with respect to the center of the map container in pixels.
- * @param [params.markerOptions={}] {objectPlain} — Marker options.
- * @param [params.controls=[{name: 'zoomControl'},{name: 'typeSelector'},{name: 'fullscreenControl'},{name: 'geolocationControl'},{name: 'rulerControl'}]] {Array} — An array of controls to be added onto the map.
- * @param [params.mapOptions={suppressMapOpenBlock: true}] {objectPlain} — Represents yandex map options to be passed to the constructor.
- * @param [params.apiKey] {string} — Yandex Maps API key. For now it is working without key, but Yandex mark it as required, so it is recommended to set it.
+ * @see {@link README.md}
  * 
  * @link https://code.divandesign.ru/jquery/ddmap
  * 
