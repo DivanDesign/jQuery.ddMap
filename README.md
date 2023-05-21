@@ -4,6 +4,11 @@ A jQuery library that allows Yandex Maps to be rendered on a page in a simple wa
 
 Right now the library works only with Yandex Maps, but in the future we are likely to add Google Maps and OpenStreetMap as well.
 
+Features:
+* You may not to think about including Yandex Map script, the library will do it automatically.
+* You don't even have to worry about the container size, the lib will set default size if it is zero.
+* If more than one marker is used, the map will be automatically scaled so that all markers are visible.
+
 
 ## Requires
 
