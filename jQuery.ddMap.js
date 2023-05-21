@@ -152,6 +152,9 @@
 								
 								params.$element.trigger('ddBeforeInit');
 								
+								//Delete all children
+								params.$element.empty();
+								
 								//Установим высоту у элемента, если она не задана
 								if (params.$element.height() == 0){
 									params.$element.height(400);
