@@ -138,6 +138,13 @@ $('.map').ddMap({
 	* Значение по умолчанию: `{suppressMapOpenBlock: true}`
 
 
+## Описание событий
+
+Все события срабатывают на основном элементе, к которому был применен `jQuery.fn.ddMap`.
+
+* `ddAfterInit` — После инициализации.
+
+
 ## Ссылки
 
 * [Home page](https://code.divandesign.ru/jquery/ddmap)

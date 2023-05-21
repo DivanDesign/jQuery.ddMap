@@ -139,6 +139,13 @@ That's all!
 	* Default value: `{suppressMapOpenBlock: true}`
 
 
+## Events description
+
+All events are triggered at the main element to which `jQuery.fn.ddMap` has been applied.
+
+* `ddAfterInit` — After initialisation.
+
+
 ## Links
 
 * [Home page](https://code.divandesign.ru/jquery/ddmap)
