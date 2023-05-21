@@ -143,6 +143,7 @@ That's all!
 
 All events are triggered at the main element to which `jQuery.fn.ddMap` has been applied.
 
+* `ddBeforeInit` — Before initialisation (when the map API is ready, immediately before the map constructor is called).
 * `ddAfterInit` — After initialisation.
 
 

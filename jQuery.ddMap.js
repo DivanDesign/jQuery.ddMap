@@ -150,6 +150,8 @@
 							if (geoObjects_len > 0){
 								params.$element = $(params.$element);
 								
+								params.$element.trigger('ddBeforeInit');
+								
 								//Установим высоту у элемента, если она не задана
 								if (params.$element.height() == 0){
 									params.$element.height(400);
