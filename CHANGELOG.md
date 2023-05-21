@@ -1,6 +1,24 @@
 # jQuery.ddMap changelog
 
 
+## Version 2.0 (2023-05-22)
+* \* The library has been renamed from `ddYMap` to `ddMap`: `jQuery.fn.ddYMap` → `jQuery.fn.ddMap`.
+* \+ You may not to think about including Yandex Map script, the library will do it automatically.
+* \+ The map size will be automatically updated each time the `resize` event will be triggered on the main container.
+* \+ All children of the main element will be deleted during initialisation.
+* \+ If Yandex Map API is not loaded, the script will await it.
+* \* Parameters:
+	* \+ `params.apiKey`: The new parameter. Yandex Maps API key. For now it is working without key, but Yandex mark it as required, so it is recommended to set it.
+	* \* The following have been renamed:
+		* \* `params.placemarks` → `params.markers`.
+		* \* `params.placemarkOptions` → `params.markerOptions`.
+	* \- `params.zoom`, `params.latLng`: The outdated names are no longer supported, use `params.defaultZoom` and `params.placemarks` instead.
+* \+ Events → `ddBeforeInit`: The new event.
+* \+ README, README_ru.
+* \+ CHANGELOG, CHANGELOG_ru.
+* \* Attention! Backward compatibility is broken.
+
+
 ## Version 1.4 (2015-07-23)
 * \+ Parameters → `controls`: The new optional parameter. It is an array of controls to be added onto the map.
 * \+ Parameters → `mapOptions`: The new optional parameter. It represents yandex map [options](https://tech.yandex.com/maps/doc/jsapi/2.1/ref/reference/Map-docpage/#param-options) to be passed to the constructor.

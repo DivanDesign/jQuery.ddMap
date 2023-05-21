@@ -1,12 +1,12 @@
 /**
  * jQuery.ddMap
- * @version 1.4 (2015-07-23)
+ * @version 2.0 (2023-05-22)
  * 
  * @see {@link README.md}
  * 
  * @link https://code.divandesign.ru/jquery/ddmap
  * 
- * @copyright 2013–2015 [Ronef]{@link https://Ronef.ru }
+ * @copyright 2013–2023 [Ronef]{@link https://Ronef.ru }
  */
 
 (function($){
