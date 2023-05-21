@@ -8,6 +8,7 @@ Features:
 * You may not to think about including Yandex Map script, the library will do it automatically.
 * You don't even have to worry about the container size, the lib will set default size if it is zero.
 * If more than one marker is used, the map will be automatically scaled so that all markers are visible.
+* The map size will be automatically updated each time the `resize` event will be triggered on the main container.
 
 
 ## Requires

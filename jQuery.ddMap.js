@@ -231,6 +231,12 @@
 								}
 								
 								params.$element
+									.on(
+										'resize',
+										() => {
+											map.container.fitToViewport();
+										}
+									)
 									.data(
 										'ddMap',
 										{map: map}
