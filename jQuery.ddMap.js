@@ -233,6 +233,38 @@
 							Array.isArray(markerData.latLng) &&
 							markerData.latLng.length == 2
 						){
+							var
+								markerOptions = $.extend(
+									true,
+									{},
+									theInstance.markerOptions
+								)
+							;
+							
+							//If marker has a custom icon
+							if (
+								typeof markerData.icon == 'object'
+								&& typeof markerData.icon.src == 'string'
+								&& markerData.icon.src.length > 0
+								&& typeof markerData.icon.size == 'object'
+								&& $.isNumeric(markerData.icon.size.width)
+								&& $.isNumeric(markerData.icon.size.height)
+							){
+								markerData.icon.size.width = parseInt(markerData.icon.size.width);
+								markerData.icon.size.height = parseInt(markerData.icon.size.height);
+								
+								markerOptions.iconLayout = 'default#image';
+								markerOptions.iconImageHref = markerData.icon.src;
+								markerOptions.iconImageSize = [
+									markerData.icon.size.width,
+									markerData.icon.size.height
+								];
+								markerOptions.iconImageOffset = [
+									markerData.icon.size.width / -2,
+									markerData.icon.size.height * -1
+								];
+							}
+							
 							//Создаём метку
 							geoObjects.add(
 								new ymaps.Placemark(
@@ -243,7 +275,7 @@
 											$.trim(markerData.content) :
 											''
 									},
-									theInstance.markerOptions
+									markerOptions
 								)
 							);
 						}

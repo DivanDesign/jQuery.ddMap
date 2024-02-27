@@ -100,6 +100,31 @@ That's all!
 	* Valid values: `string`
 	* Default value: `''`
 	
+* `params.markers[i].icon`
+	* Desctription: Custom marker icon data.
+	* Valid values: `objectPlain`
+	* Default value: — (default icon)
+	
+* `params.markers[i].icon.src`
+	* Desctription: Address of an image.
+	* Valid values: `string`
+	* **Required**
+	
+* `params.markers[i].icon.size`
+	* Desctription: Icon size.
+	* Valid values: `objectPlain`
+	* **Required**
+	
+* `params.markers[i].icon.size.width`
+	* Desctription: Image width in px.
+	* Valid values: `integer`
+	* **Required**
+	
+* `params.markers[i].icon.size.height`
+	* Desctription: Image height in px.
+	* Valid values: `integer`
+	* **Required**
+	
 * `params.apiKey`
 	* Desctription: Yandex Maps API key.  
 		_For now it is working without key, but Yandex mark it as required, so it is recommended to set it._
