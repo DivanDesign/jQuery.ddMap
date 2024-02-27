@@ -27,7 +27,7 @@ Features:
 <script src="jQuery-3.5.0.min.js"></script>
 
 <!-- jQuery.ddMap -->
-<script src="jQuery.ddMap-2.0.0.min.js"></script>
+<script src="jQuery.ddMap-2.1.0.min.js"></script>
 ```
 
 You may not to think about including Yandex Map script, the library will do it automatically.

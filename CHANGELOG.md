@@ -1,6 +1,10 @@
 # jQuery.ddMap changelog
 
 
+## Version 2.1 (2024-02-27)
+* \+ Parameters → `params.markers[i].icon`: The new optional parameter. Allows you to customaize marker icons.
+
+
 ## Version 2.0 (2023-05-22)
 * \* The library has been renamed from `ddYMap` to `ddMap`: `jQuery.fn.ddYMap` → `jQuery.fn.ddMap`.
 * \+ You may not to think about including Yandex Map script, the library will do it automatically.
