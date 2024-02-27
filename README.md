@@ -27,7 +27,7 @@ Features:
 <script src="jQuery-3.5.0.min.js"></script>
 
 <!-- jQuery.ddMap -->
-<script src="jQuery.ddMap-2.0.0.min.js"></script>
+<script src="jQuery.ddMap-2.1.0.min.js"></script>
 ```
 
 You may not to think about including Yandex Map script, the library will do it automatically.
@@ -99,6 +99,31 @@ That's all!
 	* Desctription: Content of marker popup. HTML tags are supported.
 	* Valid values: `string`
 	* Default value: `''`
+	
+* `params.markers[i].icon`
+	* Desctription: Custom marker icon data.
+	* Valid values: `objectPlain`
+	* Default value: — (default icon)
+	
+* `params.markers[i].icon.src`
+	* Desctription: Address of an image.
+	* Valid values: `string`
+	* **Required**
+	
+* `params.markers[i].icon.size`
+	* Desctription: Icon size.
+	* Valid values: `objectPlain`
+	* **Required**
+	
+* `params.markers[i].icon.size.width`
+	* Desctription: Image width in px.
+	* Valid values: `integer`
+	* **Required**
+	
+* `params.markers[i].icon.size.height`
+	* Desctription: Image height in px.
+	* Valid values: `integer`
+	* **Required**
 	
 * `params.apiKey`
 	* Desctription: Yandex Maps API key.  
