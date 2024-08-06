@@ -19,7 +19,7 @@
 			if (!theClass.isStaticInited){
 				theClass.isStaticInited = true;
 				
-				//If Yandex Maps API is not included yet
+				// If Yandex Maps API is not included yet
 				if (typeof ymaps == 'undefined'){
 					var apiSrc = '//api-maps.yandex.ru/2.1/?lang=' + navigator.language;
 					
@@ -73,17 +73,17 @@
 		constructor_init(){
 			var theInstance = this;
 			
-			//If Yandex map API is not loaded yet
+			// If Yandex map API is not loaded yet
 			if (typeof ymaps == 'undefined'){
 				theInstance.apiConnectionAttempts++;
 				
-				//Try again later but 10 attempts as maximum
+				// Try again later but 10 attempts as maximum
 				if (theInstance.apiConnectionAttempts < 10){
 					setTimeout(
 						theInstance.constructor_init.bind(theInstance),
 						(
 							500 +
-							//Await + 100 ms after each attempt
+							// Await + 100 ms after each attempt
 							theInstance.apiConnectionAttempts * 100
 						)
 					);
@@ -91,27 +91,27 @@
 			}else{
 				ymaps.ready(function(){
 					var
-						//Подготавливаем точки
+						// Подготавливаем точки
 						geoObjects = theInstance.prepareMarkers(),
-						//Количество точек
+						// Количество точек
 						geoObjects_len = geoObjects.getLength()
 					;
 					
-					//Если точки заданы
+					// Если точки заданы
 					if (geoObjects_len > 0){
 						theInstance.$element = $(theInstance.$element);
 						
 						theInstance.$element.trigger('ddBeforeInit');
 						
-						//Delete all children
+						// Delete all children
 						theInstance.$element.empty();
 						
-						//Установим высоту у элемента, если она не задана
+						// Установим высоту у элемента, если она не задана
 						if (theInstance.$element.height() == 0){
 							theInstance.$element.height(400);
 						}
 						
-						//Создаём карту
+						// Создаём карту
 						var
 							map = new ymaps.Map(
 								theInstance.$element.get(0),
@@ -125,13 +125,13 @@
 							)
 						;
 						
-						//Если заданы котролы
+						// Если заданы котролы
 						if(Array.isArray(theInstance.controls)){
 							theInstance.controls.forEach(
 								control =>
 								{
 									if(control.name){
-										//Добавляем их
+										// Добавляем их
 										map.controls.add(
 											control.name,
 											control.options
@@ -141,34 +141,34 @@
 							);
 						}
 						
-						//Если зум не нужен
+						// Если зум не нужен
 						if (!theInstance.scrollZoom){
-							//Выключим масштабирование колесом мыши (т.к. в 2.1 по умолчанию он включён)
+							// Выключим масштабирование колесом мыши (т.к. в 2.1 по умолчанию он включён)
 							map.behaviors.disable('scrollZoom');
 						}
 						
-						//Добавляем метки на карту
+						// Добавляем метки на карту
 						map.geoObjects.add(geoObjects);
 						
-						//Если меток несколько
+						// Если меток несколько
 						if (geoObjects_len > 1){
-							//Если элемент с картой скрыт
+							// Если элемент с картой скрыт
 							if (theInstance.$element.is(':hidden')){
-								//При первом изменении размера (иначе, если карта была скрыта, выйдет плохо)
+								// При первом изменении размера (иначе, если карта была скрыта, выйдет плохо)
 								map.events.once(
 									'sizechange',
 									function(){
-										//Надо, чтобы они все влезли
+										// Надо, чтобы они все влезли
 										map.setBounds(geoObjects.getBounds());
 									}
 								);
 							}else{
-								//Надо, чтобы они все влезли
+								// Надо, чтобы они все влезли
 								map.setBounds(geoObjects.getBounds());
 							}
 						}
 						
-						//Если нужно смещение центра карты
+						// Если нужно смещение центра карты
 						if (
 							Array.isArray(theInstance.mapCenterOffset) &&
 							theInstance.mapCenterOffset.length == 2
@@ -209,13 +209,13 @@
 				return geoObjects;
 			}
 			
-			//Если передана просто пара координат
+			// Если передана просто пара координат
 			if (
 				theInstance.markers.length == 2 &&
 				$.isNumeric(theInstance.markers[0]) &&
 				$.isNumeric(theInstance.markers[1])
 			){
-				//Значит точка одна
+				// Значит точка одна
 				geoObjects.add(
 					new ymaps.Placemark(
 						theInstance.markers,
@@ -224,10 +224,10 @@
 					)
 				);
 			}else{
-				//Переберём все точки
+				// Переберём все точки
 				theInstance.markers.forEach(
 					markerData => {
-						//Если координаты заданы
+						// Если координаты заданы
 						if (
 							$.isPlainObject(markerData) &&
 							Array.isArray(markerData.latLng) &&
@@ -241,7 +241,7 @@
 								)
 							;
 							
-							//If marker has a custom icon
+							// If marker has a custom icon
 							if (
 								typeof markerData.icon == 'object'
 								&& typeof markerData.icon.src == 'string'
@@ -265,7 +265,7 @@
 								];
 							}
 							
-							//Создаём метку
+							// Создаём метку
 							geoObjects.add(
 								new ymaps.Placemark(
 									markerData.latLng,
@@ -286,10 +286,10 @@
 			return geoObjects;
 		}
 		
-		//This method from jQuery.ddUI
+		// This method from jQuery.ddUI
 		/**
 		 * @method setProps
-		 * @version 1.1 (2023-04-22)
+		 * @version 1.1.1 (2024-08-06)
 		 * 
 		 * @desc Sets the ojbect properties.
 		 * 
@@ -308,9 +308,9 @@
 						propValue
 					]) =>
 					{
-						//If the property exists
+						// If the property exists
 						if (typeof theInstance[propName] != 'undefined'){
-							//Plain objects are extended, others are owerwrited
+							// Plain objects are extended, others are owerwrited
 							if ($.isPlainObject(theInstance[propName])){
 								$.extend(
 									theInstance[propName],

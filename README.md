@@ -48,17 +48,17 @@ You don't even have to worry about the container size, the lib will set default 
 
 ```js
 $('.map').ddMap({
-	//You can add several markers if you want
-	//If there is more than one marker, the map will be auto-scaled to make all the markers visible
+	// You can add several markers if you want
+	// If there is more than one marker, the map will be auto-scaled to make all the markers visible
 	markers: [
-		//At least one marker is required
+		// At least one marker is required
 		{
-			//Geo position is required
+			// Geo position is required
 			latLng: [
 				51.532098,
 				-0.178100
 			],
-			//Content is optional, you can avoid it
+			// Content is optional, you can avoid it
 			content: '<p>Some marker text.</p>'
 		}
 	]
